@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>3D 卡片展示（Importmap 版）</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      width: 1000vw;
+      height: 1000vh;
+      background: #ffffff;
+    }
+  </style>
+
+  <!-- importmap：將模組名對應到 CDN 真實路徑 -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.module.js",
+      "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.157.0/examples/jsm/controls/OrbitControls.js"
+    }
+  }
+  </script>
+
+  <!-- gsap for animation -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+</head>
+<body>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
