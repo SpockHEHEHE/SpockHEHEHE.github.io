@@ -2,6 +2,90 @@ import * as THREE from 'three';
 import { OrbitControls } from 'OrbitControls';
 import gsap from 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/+esm';
 
+// === 登入用的使用者資料 ===
+//A何敏華B林昀蒨C黃文鶯
+const userCards = {
+何敏華: {
+topLayer: [
+'assets/11.jpg','assets/12.jpg','assets/13.jpg','assets/14.jpg','assets/15.jpg','assets/16.jpg','assets/17.jpg','assets/18.jpg'
+],
+midLayer: [
+'assets/1.jpg','assets/2.jpg','assets/3.jpg','assets/4.jpg','assets/5.jpg','assets/6.jpg','assets/7.jpg','assets/8.jpg','assets/9.jpg','assets/10.jpg'
+],
+bottomLayer: [
+'assets/19.jpg','assets/20.jpg','assets/21.jpg','assets/22.jpg','assets/23.jpg','assets/24.jpg','assets/25.jpg','assets/26.jpg','assets/27.jpg'
+]
+},
+林昀蒨:  {
+topLayer: [
+'assets/11.jpg','assets/12.jpg','assets/13.jpg','assets/14.jpg','assets/15.jpg','assets/16.jpg','assets/17.jpg','assets/18.jpg'
+],
+midLayer: [
+'assets/1.jpg','assets/2.jpg','assets/3.jpg','assets/4.jpg','assets/5.jpg','assets/6.jpg','assets/7.jpg','assets/8.jpg','assets/9.jpg','assets/10.jpg'
+],
+bottomLayer: [
+'assets/messageImage_1746012419804.jpg','assets/20.jpg','assets/21.jpg','assets/22.jpg','assets/23.jpg','assets/24.jpg','assets/25.jpg','assets/26.jpg','assets/27.jpg'
+]
+},
+
+黃文鶯:  {
+topLayer: [
+'assets/11.jpg','assets/12.jpg','assets/13.jpg','assets/14.jpg','assets/15.jpg','assets/16.jpg','assets/17.jpg','assets/18.jpg'
+],
+midLayer: [
+'assets/1.jpg','assets/2.jpg','assets/3.jpg','assets/4.jpg','assets/5.jpg','assets/6.jpg','assets/7.jpg','assets/8.jpg','assets/9.jpg','assets/10.jpg'
+],
+bottomLayer: [
+'assets/19.jpg','assets/20.jpg','assets/21.jpg','assets/22.jpg','assets/23.jpg','assets/24.jpg','assets/25.jpg','assets/26.jpg','assets/27.jpg'
+]
+}
+};
+
+// === 登入檢查邏輯 ===
+document.addEventListener('DOMContentLoaded', () => {
+  const loginBtn = document.getElementById('login-btn');
+  const msg = document.getElementById('login-msg');
+
+  const copyBtn = document.getElementById('copy-name-btn');
+  copyBtn.addEventListener('click', () => {
+    const name = document.getElementById('name-helper').value.trim();
+    document.getElementById('password').value = name;
+});
+
+
+  loginBtn.addEventListener('click', () => {
+    const acc = document.getElementById('account').value.trim();
+    const pwd = document.getElementById('password').value.trim();
+
+    if (acc !== '315') {
+      msg.textContent = '帳號錯誤';
+      return;
+    }
+
+    if (!userCards[pwd]) {
+      msg.textContent = '找不到這個名字，請確認輸入或聯絡管理者';
+      return;
+    }
+
+    // 隱藏登入畫面和輔助欄位
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('name-helper-box').style.display = 'none';
+
+const userData = userCards[pwd];
+if (userData.topLayer && userData.midLayer && userData.bottomLayer) {
+  topLayer = userData.topLayer;
+  midLayer = userData.midLayer;
+  bottomLayer = userData.bottomLayer;
+}
+
+
+createLayeredCardPositions();
+  });
+});
+
+
+
+// === Three.js 主邏輯 ===
 // 建立場景、相機和渲染器
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -55,15 +139,9 @@ const cardGroup = new THREE.Group();
 scene.add(cardGroup);
 
 // 圖片清單（依三層分組）
-const topLayer = [
-  'assets/11.jpg','assets/12.jpg','assets/13.jpg','assets/14.jpg','assets/15.jpg','assets/16.jpg','assets/17.jpg','assets/18.jpg'
-];
-const midLayer = [
-  'assets/1.jpg','assets/2.jpg','assets/3.jpg','assets/4.jpg','assets/5.jpg','assets/6.jpg','assets/7.jpg','assets/8.jpg','assets/9.jpg','assets/10.jpg'
-];
-const bottomLayer = [
-  'assets/19.jpg','assets/20.jpg','assets/21.jpg','assets/22.jpg','assets/23.jpg','assets/24.jpg','assets/25.jpg','assets/26.jpg','assets/27.jpg'
-];
+let topLayer = [];
+let midLayer = []
+let bottomLayer = [];
 
 //card
 
@@ -78,7 +156,7 @@ function createCard(pos, imgUrl) {
       map: texture,
       side: THREE.DoubleSide,
       roughness: 0.0,
-      metalness: 0.0,
+      metalness: 0.2,
     });
     const card = new THREE.Mesh(geo, mat);
     card.position.copy(pos);
@@ -118,7 +196,7 @@ createLayeredCardPositions();
 // 點擊放大卡片
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
-let activeCard = null;
+let activeCard = true;
 let isZoomed = false;
 
 function resetActiveCard() {
@@ -164,7 +242,7 @@ function resetActiveCard() {
   }
 }
 
-window.addEventListener('click', (e) => {
+window.addEventListener('pointerdown', (e) => {
   mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
   raycaster.setFromCamera(mouse, camera);
@@ -177,6 +255,9 @@ window.addEventListener('click', (e) => {
       activeCard = clickedCard;
       isZoomed = true;
       const cardToCenter = new THREE.Vector3().subVectors(clickedCard.position, new THREE.Vector3(0, 0, 0)).normalize();
+
+
+
       const moveDistance = 3;
       const distance = clickedCard.position.distanceTo(camera.position);
       const scaleFactor = Math.tan(Math.PI * camera.fov / 360) * distance;
