@@ -191,7 +191,7 @@ function createLayeredCardPositions() {
     }
   }
 }
-createLayeredCardPositions();
+//createLayeredCardPositions();
 
 // 點擊放大卡片
 const raycaster = new THREE.Raycaster();
@@ -246,7 +246,10 @@ function resetActiveCard() {
 let pointerStart = null;
 
 window.addEventListener('pointerdown', (e) => {
-  pointerStart = { x: e.clientX, y: e.clientY };
+  if (e.isPrimary && e.pointerType === 'touch') {
+    handleInteraction(e.clientX, e.clientY);
+  }
+  //pointerStart = { x: e.clientX, y: e.clientY };
 });
 
 window.addEventListener('pointerup', (e) => {
