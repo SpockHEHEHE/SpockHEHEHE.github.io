@@ -242,6 +242,17 @@ function resetActiveCard() {
   }
 }
 
+
+let pointerStart = null;
+
+window.addEventListener('pointerdown', (e) => {
+  pointerStart = { x: e.clientX, y: e.clientY };
+});
+
+window.addEventListener('pointerup', (e) => {
+  pointerStart = { x: e.clientX, y: e.clientY };
+});
+
 window.addEventListener('pointerdown', (e) => {
   mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
