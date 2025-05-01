@@ -85,15 +85,8 @@ createLayeredCardPositions();
 
 
 
-// === Three.js 主邏輯 ===
-// 建立場景、相機和渲染器
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-  50,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  100
-);
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.z = 14;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -101,63 +94,39 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild(renderer.domElement);
 
-// 加入控制器
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
+controls.enablePan = false;
+controls.maxDistance = 20;
+controls.minDistance = 5;
 
-// 加入環境光
 scene.add(new THREE.AmbientLight(0xffffff, 2.3));
 
-// 建立中心球體
 const sphereGeo = new THREE.SphereGeometry(1, 32, 32);
-const sphereMat = new THREE.MeshBasicMaterial({
-  color: 0xff5533,
-//  wireframe: true,
-  transparent: true,
-  opacity: 0,
-});
+const sphereMat = new THREE.MeshBasicMaterial({ color: 0xff5533, transparent: true, opacity: 0 });
 const sphere = new THREE.Mesh(sphereGeo, sphereMat);
-// scene.add(sphere);
 
-// 加入背景彩色球體
 const bgGeometry = new THREE.SphereGeometry(50, 64, 64);
 const bgTexture = new THREE.TextureLoader().load('assets/bg.jpg');
-const bgMaterial = new THREE.MeshBasicMaterial({
-  map: bgTexture,
-  side: THREE.BackSide,
-  transparent: true,
-  opacity: 0 // 初始隱藏
-});
+const bgMaterial = new THREE.MeshBasicMaterial({ map: bgTexture, side: THREE.BackSide, transparent: true, opacity: 0 });
 const backgroundSphere = new THREE.Mesh(bgGeometry, bgMaterial);
 scene.add(backgroundSphere);
 
-// 球體自轉速度參數
-const rotationSpeed = 0.005;
-
-// 建立卡片群組
 const cardGroup = new THREE.Group();
 scene.add(cardGroup);
 
-// 圖片清單（依三層分組）
 let topLayer = [];
-let midLayer = []
+let midLayer = [];
 let bottomLayer = [];
-
-//card
 
 function createCard(pos, imgUrl) {
   const image = new Image();
   image.src = imgUrl;
   image.onload = () => {
     const aspectRatio = image.width / image.height;
-    const geo = new THREE.PlaneGeometry(2 * aspectRatio, 2);
+    const geo = new THREE.PlaneGeometry(1.6 * aspectRatio, 1.6);
     const texture = new THREE.TextureLoader().load(imgUrl);
-    const mat = new THREE.MeshStandardMaterial({
-      map: texture,
-      side: THREE.DoubleSide,
-      roughness: 0.0,
-      metalness: 0.2,
-    });
+    const mat = new THREE.MeshStandardMaterial({ map: texture, side: THREE.DoubleSide, roughness: 0, metalness: 0.2 });
     const card = new THREE.Mesh(geo, mat);
     card.position.copy(pos);
     card.lookAt(0, 0, 0);
@@ -165,7 +134,7 @@ function createCard(pos, imgUrl) {
     card.userData.original = {
       position: pos.clone(),
       scale: card.scale.clone(),
-      rotation: card.rotation.clone(),
+      rotation: card.rotation.clone()
     };
     cardGroup.add(card);
   };
@@ -174,9 +143,9 @@ function createCard(pos, imgUrl) {
 function createLayeredCardPositions() {
   const R = 6;
   const layers = [
-    { list: topLayer, phi: 3 * Math.PI / 9 },
+    { list: topLayer, phi: Math.PI / 3 },
     { list: midLayer, phi: Math.PI / 2 },
-    { list: bottomLayer, phi: 6 * Math.PI / 9 }
+    { list: bottomLayer, phi: 2 * Math.PI / 3 }
   ];
   const spherical = new THREE.Spherical();
   const point = new THREE.Vector3();
@@ -191,70 +160,37 @@ function createLayeredCardPositions() {
     }
   }
 }
-//createLayeredCardPositions();
 
-// 點擊放大卡片
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
-let activeCard = true;
+let activeCard = null;
 let isZoomed = false;
 
 function resetActiveCard() {
-  if (activeCard) {
-    gsap.to(activeCard.position, {
-      x: activeCard.userData.original.position.x,
-      y: activeCard.userData.original.position.y,
-      z: activeCard.userData.original.position.z,
-      duration: 1,
-      ease: 'power2.inOut',
-      onUpdate: () => {
-        activeCard.lookAt(0, 0, 0);
-        activeCard.rotation.y += Math.PI;
-      },
-      onComplete: () => {
-        isZoomed = false;
-        activeCard = null;
-        controls.enabled = true;
-      },
-    });
-
-    gsap.to(activeCard.scale, {
-      x: 1,
-      y: 1,
-      duration: 1,
-      ease: 'power2.inOut',
-    });
-
-    gsap.to(activeCard.rotation, {
-      x: activeCard.userData.original.rotation.x,
-      y: activeCard.userData.original.rotation.y,
-      z: activeCard.userData.original.rotation.z,
-      duration: 1,
-      ease: 'power2.inOut',
-    });
-
-    // 背景淡出
-    /*gsap.to(bgMaterial, {
-      opacity: 0,
-      duration: 1.2,
-      ease: 'power2.inOut'
-    });*/
-  }
+  if (!activeCard) return;
+  gsap.to(activeCard.position, {
+    ...activeCard.userData.original.position,
+    duration: 1,
+    ease: 'power2.inOut',
+    onUpdate: () => activeCard.lookAt(0, 0, 0),
+    onComplete: () => {
+      isZoomed = false;
+      activeCard = null;
+      controls.enabled = true;
+    }
+  });
+  gsap.to(activeCard.scale, {
+    x: 1, y: 1,
+    duration: 1,
+    ease: 'power2.inOut'
+  });
+  gsap.to(activeCard.rotation, {
+    ...activeCard.userData.original.rotation,
+    duration: 1,
+    ease: 'power2.inOut'
+  });
+  gsap.to(bgMaterial, { opacity: 0, duration: 1.2, ease: 'power2.inOut' });
 }
-
-
-let pointerStart = null;
-
-window.addEventListener('pointerdown', (e) => {
-  if (e.isPrimary && e.pointerType === 'touch') {
-    handleInteraction(e.clientX, e.clientY);
-  }
-  //pointerStart = { x: e.clientX, y: e.clientY };
-});
-
-window.addEventListener('pointerup', (e) => {
-  pointerStart = { x: e.clientX, y: e.clientY };
-});
 
 window.addEventListener('pointerdown', (e) => {
   mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -265,51 +201,26 @@ window.addEventListener('pointerdown', (e) => {
   if (intersects.length > 0) {
     const clickedCard = intersects[0].object;
     if (!isZoomed) {
-      controls.enabled = false;
       activeCard = clickedCard;
       isZoomed = true;
-      const cardToCenter = new THREE.Vector3().subVectors(clickedCard.position, new THREE.Vector3(0, 0, 0)).normalize();
+      controls.enabled = false;
 
-
-
-      const moveDistance = 3;
-      const distance = clickedCard.position.distanceTo(camera.position);
-      const scaleFactor = Math.tan(Math.PI * camera.fov / 360) * distance;
-      const scaleX = 3 / 9 * scaleFactor;
-      const scaleY = 3 / 9 * scaleFactor;
+      const dir = clickedCard.position.clone().normalize();
+      const scaleFactor = Math.min(window.innerWidth, window.innerHeight) / 320;
 
       gsap.to(clickedCard.position, {
-        x: cardToCenter.x * 3 * moveDistance,
-        y: cardToCenter.y * 3 * moveDistance,
-        z: cardToCenter.z * 3 * moveDistance,
-        duration: 1,
-        ease: 'power2.inOut',
+        x: dir.x * 10, y: dir.y * 10, z: dir.z * 10,
+        duration: 1, ease: 'power2.inOut'
       });
-
       gsap.to(clickedCard.scale, {
-        x: scaleX,
-        y: scaleY,
-        duration: 1,
-        ease: 'power2.inOut',
+        x: scaleFactor, y: scaleFactor,
+        duration: 1, ease: 'power2.inOut'
       });
-
-      // 背景淡入
-      gsap.to(bgMaterial, {
-        opacity: 1,
-        duration: 1.2,
-        ease: 'power2.inOut'
-      });
-
+      gsap.to(bgMaterial, { opacity: 1, duration: 1.2, ease: 'power2.inOut' });
     } else if (activeCard === clickedCard) {
       resetActiveCard();
     }
-  } else {
-    if (isZoomed) resetActiveCard(); // 點擊空白處還原
-  }
-});
-
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && isZoomed) {
+  } else if (isZoomed) {
     resetActiveCard();
   }
 });
@@ -320,13 +231,17 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && isZoomed) resetActiveCard();
+});
+
 function animate() {
   requestAnimationFrame(animate);
   if (!isZoomed) {
-    sphere.rotation.y += rotationSpeed;
-    cardGroup.rotation.y += rotationSpeed;
+    cardGroup.rotation.y += 0.005;
   }
   controls.update();
   renderer.render(scene, camera);
 }
+
 animate();
