@@ -263,8 +263,8 @@ window.addEventListener('pointerdown', (e) => {
       const scaleFactor = Math.min(window.innerWidth, window.innerHeight) / 320;
 
       gsap.to(clickedCard.position, {
-        x: dir.x * 10, y: dir.y * 10, z: dir.z * 10,
-        duration: 1, ease: 'power2.inOut'
+        x: dir.x * 5, y: dir.y * 5, z: dir.z * 5,
+        duration: 0.5, ease: 'power2.inOut'
       });
       gsap.to(clickedCard.scale, {
         x: scaleFactor, y: scaleFactor,
