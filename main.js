@@ -13,7 +13,7 @@ const userCards = {
       'assets/A/1.jpg','assets/A/2.jpg','assets/A/3.jpg','assets/A/4.jpg','assets/A/5.jpg','assets/A/6.jpg','assets/A/7.jpg','assets/A/8.jpg','assets/A/9.jpg','assets/A/10.jpg'
     ],
     bottomLayer: [
-      'assets/A/19.jpg','assets/A/20.jpg','assets/A/21.jpg','assets/A/22.jpg','assets/A/23.jpg','assets/A/24.jpg','assets/A/25.jpg','assets/A/26.jpg','assets/A/27.jpg'
+      'assets/A/19.jpg','assets/A/20.jpg','assets/A/21.jpg','assets/A/22.jpg','assets/A/23.jpg','assets/A/24.jpg','assets/A/25.jpg','assets/A/26.jpg'
     ]
   },
   林昀蒨: {
@@ -24,7 +24,7 @@ const userCards = {
       'assets/B/1.jpg','assets/B/2.jpg','assets/B/3.jpg','assets/B/4.jpg','assets/B/5.jpg','assets/B/6.jpg','assets/B/7.jpg','assets/B/8.jpg','assets/B/9.jpg','assets/B/10.jpg'
     ],
     bottomLayer: [
-      'assets/B/19.jpg','assets/B/20.jpg','assets/B/21.jpg','assets/B/22.jpg','assets/B/23.jpg','assets/B/24.jpg','assets/B/25.jpg','assets/B/26.jpg','assets/B/27.jpg'
+      'assets/B/19.jpg','assets/B/20.jpg','assets/B/21.jpg','assets/B/22.jpg','assets/B/23.jpg','assets/B/24.jpg','assets/B/25.jpg','assets/B/26.jpg'
     ]
   },
   黃文鶯: {
@@ -35,7 +35,7 @@ const userCards = {
       'assets/C/1.jpg','assets/C/2.jpg','assets/C/3.jpg','assets/C/4.jpg','assets/C/5.jpg','assets/C/6.jpg','assets/C/7.jpg','assets/C/8.jpg','assets/C/9.jpg','assets/C/10.jpg'
     ],
     bottomLayer: [
-      'assets/C/19.jpg','assets/C/20.jpg','assets/C/21.jpg','assets/C/22.jpg','assets/C/23.jpg','assets/C/24.jpg','assets/C/25.jpg','assets/C/26.jpg','assets/C/27.jpg'
+      'assets/C/19.jpg','assets/C/20.jpg','assets/C/21.jpg','assets/C/22.jpg','assets/C/23.jpg','assets/C/24.jpg','assets/C/25.jpg','assets/C/26.jpg'
     ]
   },
   鄭伊嵐: {
@@ -46,7 +46,7 @@ const userCards = {
       'assets/D/1.jpg','assets/D/2.jpg','assets/D/3.jpg','assets/D/4.jpg','assets/D/5.jpg','assets/D/6.jpg','assets/D/7.jpg','assets/D/8.jpg','assets/D/9.jpg','assets/D/10.jpg'
     ],
     bottomLayer: [
-      'assets/D/19.jpg','assets/D/20.jpg','assets/D/21.jpg','assets/D/22.jpg','assets/D/23.jpg','assets/D/24.jpg','assets/D/25.jpg','assets/D/26.jpg','assets/D/27.jpg'
+      'assets/D/19.jpg','assets/D/20.jpg','assets/D/21.jpg','assets/D/22.jpg','assets/D/23.jpg','assets/D/24.jpg','assets/D/25.jpg','assets/D/26.jpg'
     ]
   },
   詹永和: {
@@ -57,7 +57,7 @@ const userCards = {
       'assets/E/1.jpg','assets/E/2.jpg','assets/E/3.jpg','assets/E/4.jpg','assets/E/5.jpg','assets/E/6.jpg','assets/E/7.jpg','assets/E/8.jpg','assets/E/9.jpg','assets/E/10.jpg'
     ],
     bottomLayer: [
-      'assets/E/19.jpg','assets/E/20.jpg','assets/E/21.jpg','assets/E/22.jpg','assets/E/23.jpg','assets/E/24.jpg','assets/E/25.jpg','assets/E/26.jpg','assets/E/27.jpg'
+      'assets/E/19.jpg','assets/E/20.jpg','assets/E/21.jpg','assets/E/22.jpg','assets/E/23.jpg','assets/E/24.jpg','assets/E/25.jpg','assets/E/26.jpg'
     ]
   },
   羅文均: {
@@ -68,7 +68,7 @@ const userCards = {
       'assets/F/1.jpg','assets/F/2.jpg','assets/F/3.jpg','assets/F/4.jpg','assets/F/5.jpg','assets/F/6.jpg','assets/F/7.jpg','assets/F/8.jpg','assets/F/9.jpg','assets/F/10.jpg'
     ],
     bottomLayer: [
-      'assets/F/19.jpg','assets/F/20.jpg','assets/F/21.jpg','assets/F/22.jpg','assets/F/23.jpg','assets/F/24.jpg','assets/F/25.jpg','assets/F/26.jpg','assets/F/27.jpg'
+      'assets/F/19.jpg','assets/F/20.jpg','assets/F/21.jpg','assets/F/22.jpg','assets/F/23.jpg','assets/F/24.jpg','assets/F/25.jpg','assets/F/26.jpg'
     ]
   },
   賴奕傑: {
@@ -79,7 +79,7 @@ const userCards = {
       'assets/G/1.jpg','assets/G/2.jpg','assets/G/3.jpg','assets/G/4.jpg','assets/G/5.jpg','assets/G/6.jpg','assets/G/7.jpg','assets/G/8.jpg','assets/G/9.jpg','assets/G/10.jpg'
     ],
     bottomLayer: [
-      'assets/G/19.jpg','assets/G/20.jpg','assets/G/21.jpg','assets/G/22.jpg','assets/G/23.jpg','assets/G/24.jpg','assets/G/25.jpg','assets/G/26.jpg','assets/G/27.jpg'
+      'assets/G/19.jpg','assets/G/20.jpg','assets/G/21.jpg','assets/G/22.jpg','assets/G/23.jpg','assets/G/24.jpg','assets/G/25.jpg','assets/G/26.jpg'
     ]
   },
   李承修: {
@@ -90,7 +90,7 @@ const userCards = {
       'assets/H/1.jpg','assets/H/2.jpg','assets/H/3.jpg','assets/H/4.jpg','assets/H/5.jpg','assets/H/6.jpg','assets/H/7.jpg','assets/H/8.jpg','assets/H/9.jpg','assets/H/10.jpg'
     ],
     bottomLayer: [
-      'assets/H/19.jpg','assets/H/20.jpg','assets/H/21.jpg','assets/H/22.jpg','assets/H/23.jpg','assets/H/24.jpg','assets/H/25.jpg','assets/H/26.jpg','assets/H/27.jpg'
+      'assets/H/19.jpg','assets/H/20.jpg','assets/H/21.jpg','assets/H/22.jpg','assets/H/23.jpg','assets/H/24.jpg','assets/H/25.jpg','assets/H/26.jpg'
     ]
   }
 };
