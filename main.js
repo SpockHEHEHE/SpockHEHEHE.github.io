@@ -255,7 +255,7 @@ window.addEventListener('pointerdown', (e) => {
     if (!isZoomed) {
       activeCard = clickedCard;
       isZoomed = true;
-      controls.enabled = false;
+      controls.enabled = true;
 
       const dir = clickedCard.position.clone().normalize();
       const scaleFactor = Math.min(window.innerWidth, window.innerHeight) / 320;
