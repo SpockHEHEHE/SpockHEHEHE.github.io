@@ -229,7 +229,7 @@ function resetActiveCard() {
     onComplete: () => {
       isZoomed = false;
       activeCard = null;
-      controls.enabled = true;d
+      controls.enabled = true;
     }
   });
   gsap.to(activeCard.scale, {
