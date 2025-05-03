@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (!userCards[pwd]) {
-      msg.textContent = '找不到這個名字，請確認輸入或聯絡管理者';
+      msg.textContent = '找不到這個名字，Who are you?';
       return;
     }
 
@@ -143,7 +143,7 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.z = 14;
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild(renderer.domElement);
@@ -226,11 +226,10 @@ function resetActiveCard() {
     ...activeCard.userData.original.position,
     duration: 1,
     ease: 'power2.inOut',
-    onUpdate: () => activeCard.lookAt(0, 0, 0),
     onComplete: () => {
       isZoomed = false;
       activeCard = null;
-      controls.enabled = true;
+      controls.enabled = true;d
     }
   });
   gsap.to(activeCard.scale, {
@@ -243,7 +242,6 @@ function resetActiveCard() {
     duration: 1,
     ease: 'power2.inOut'
   });
-  gsap.to(bgMaterial, { opacity: 0, duration: 1.2, ease: 'power2.inOut' });
 }
 
 window.addEventListener('pointerdown', (e) => {
