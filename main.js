@@ -12,7 +12,7 @@ const userCards = {
       'assets/A/11.jpg','assets/A/12.jpg','assets/A/13.jpg','assets/A/14.jpg','assets/A/15.jpg','assets/A/16.jpg','assets/A/17.jpg','assets/A/18.jpg'
     ],
     midLayer: [
-      'assets/A/1.jpg','assets/A/2.jpg','assets/A/3.jpg','assets/A/4.jpg','assets/A/5.jpg','assets/A/27.jpg','assets/A/28.jpg','assets/A/29.jpg','assets/A/30.jpg','assets/A/31.jpg'
+      'assets/A/1.jpg','assets/A/2.jpg','assets/A/3.jpg','assets/A/5.jpg','assets/A/27.jpg','assets/A/28.jpg','assets/A/29.jpg','assets/A/30.jpg','assets/A/31.jpg'
     ],
     bottomLayer: [
       'assets/A/19.jpg','assets/A/20.jpg','assets/A/21.jpg','assets/A/22.jpg','assets/A/23.jpg','assets/A/24.jpg','assets/A/25.jpg','assets/A/32.jpg'
